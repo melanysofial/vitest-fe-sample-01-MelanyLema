@@ -41,6 +41,11 @@ describe('agregarTarea', () => {
     expect(lista.querySelector('.tarea-texto').textContent).toBe('Aprender vitest');
   });
 
+  it ('debe fomratear el texto antes de antes de agregarlo (primero mayuscula segundo minuscula', () => {
+    agregarTarea(' eSTudIAR VeRiFIcaCIon de SW');
+    const span = lista.querySelector('.tarea-texto');
+    expect(span.textContent).toBe('Estudiar verificacion de sw');
+  });
   
 });
 

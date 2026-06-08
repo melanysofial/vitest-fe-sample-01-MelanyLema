@@ -6,6 +6,7 @@ import { validarTexto, formatearTexto } from '../utils/texto.js';
  * @param {string} texto - Texto de la tarea (ya formateado).
  * @returns {HTMLLIElement}
  */
+
 export function crearTareaElemento(texto) {
   const li = document.createElement('li');
   li.className = 'tarea-item';
@@ -39,6 +40,7 @@ export function crearTareaElemento(texto) {
  * @param {HTMLUListElement} lista - Elemento <ul> contenedor de tareas.
  * @returns {{ exito: boolean, error?: string }}
  */
+
 export function agregarTarea(texto, lista) {
   const validacion = validarTexto(texto);
 
@@ -68,6 +70,7 @@ export function eliminarTarea(elemento) {
  * @param {HTMLLIElement} elemento - El elemento <li> de la tarea.
  * @param {HTMLInputElement} checkbox - El checkbox asociado.
  */
+
 export function alternarTarea(elemento, checkbox) {
   elemento.classList.toggle('completada', checkbox.checked);
 }
@@ -78,6 +81,7 @@ export function alternarTarea(elemento, checkbox) {
  * @param {HTMLUListElement} lista - Elemento <ul> contenedor de tareas.
  * @returns {number} Cantidad de tareas eliminadas.
  */
+
 export function limpiarCompletadas(lista) {
   const completadas = lista.querySelectorAll('.tarea-item.completada');
   completadas.forEach((item) => item.remove());
@@ -90,6 +94,7 @@ export function limpiarCompletadas(lista) {
  * @param {HTMLUListElement} lista - Elemento <ul> contenedor de tareas.
  * @param {HTMLElement} contenedor - Elemento donde se muestra el contador.
  */
+
 export function actualizarContador(lista, contenedor) {
   const total = lista.querySelectorAll('.tarea-item').length;
   contenedor.textContent = `${total} tarea${total !== 1 ? 's' : ''}`;
@@ -101,6 +106,7 @@ export function actualizarContador(lista, contenedor) {
  * @param {string} mensaje - Mensaje de error a mostrar.
  * @param {HTMLElement} contenedor - Elemento donde se muestra el error.
  */
+
 export function mostrarError(mensaje, contenedor) {
   contenedor.textContent = mensaje;
 }
@@ -108,6 +114,7 @@ export function mostrarError(mensaje, contenedor) {
 /**
  * Inicializa la aplicación: vincula eventos del formulario, botones y contador.
  */
+
 export function inicializarTodoApp() {
   const form = document.getElementById('form-tarea');
   const input = document.getElementById('input-tarea');
