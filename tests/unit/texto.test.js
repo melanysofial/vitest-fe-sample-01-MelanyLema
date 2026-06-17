@@ -64,3 +64,30 @@ describe('formatearTexto', () => {
   });
   
 });
+
+// ============================================================
+// Pruebas adicionales — Tarea 1
+// ============================================================
+describe('Pruebas adicionales — Tarea 1', () => {
+
+  it('validarTexto: texto con caracteres especiales (emojis, tildes, eñes)', () => {
+    const resultado = validarTexto('Mañana 🚀');
+    expect(resultado.valido).toBe(true);
+    expect(resultado.error).toBe('');
+  });
+
+  it('validarTexto: texto con 3 espacios y luego una letra ("   A")', () => {
+    const resultado = validarTexto('   A');
+    expect(resultado.valido).toBe(false); // Cambiado a false porque el trim reduce la longitud
+  });
+
+  it('formatearTexto: texto con caracteres especiales como "árbol"', () => {
+    const resultado = formatearTexto('árbol');
+    expect(resultado).toBe('Árbol');
+  });
+
+  it('formatearTexto: texto que ya está bien formateado', () => {
+    const resultado = formatearTexto('Comprar pan');
+    expect(resultado).toBe('Comprar pan');
+  });
+});

@@ -42,7 +42,7 @@ describe('agregarTarea', () => {
   });
 
   it ('debe fomratear el texto antes de antes de agregarlo (primero mayuscula segundo minuscula', () => {
-    agregarTarea(' eSTudIAR VeRiFIcaCIon de SW');
+    agregarTarea(' eSTudIAR VeRiFIcaCIon de SW', lista); // <-- Aquí faltaba el parámetro 'lista'
     const span = lista.querySelector('.tarea-texto');
     expect(span.textContent).toBe('Estudiar verificacion de sw');
   });
@@ -123,4 +123,65 @@ describe('mostrarError', () => {
   });
 
   
+});
+
+// ============================================================
+// Pruebas adicionales — Tarea 2
+// ============================================================
+describe('Pruebas adicionales — Tarea 2', () => {
+  let lista;
+
+  beforeEach(() => {
+    lista = crearLista();
+  });
+
+  it('debe eliminar la tarea de la lista si se da clic en el boton de eliminar', () => {
+    const li = crearTareaElemento('Tarea nueva');
+    lista.appendChild(li);
+    expect(lista.children.length).toBe(1);
+
+    const btnEliminar = li.querySelector('.tarea-eliminar') || li.querySelector('button');
+    btnEliminar.click();
+
+    expect(lista.children.length).toBe(0);
+  });
+
+  it('debe alternar la clase completada cuando el checkbox cambia de estado', () => {
+    const li = crearTareaElemento('Probar evento change');
+    const checkbox = li.querySelector('.tarea-checkbox');
+
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+
+    expect(li.classList.contains('completada')).toBe(true);
+  });
+
+  it('debe agregar la tarea con un texto de exactamente 200 caracteres', () => {
+    const textoLargo = 'A'.repeat(200);
+    const resultado = agregarTarea(textoLargo, lista);
+
+    // Formamos el texto como lo dejaría formatearTexto (Primera Mayúscula, resto minúsculas)
+    const textoFormateadoEsperado = 'A' + 'a'.repeat(199);
+
+    expect(resultado.exito).toBe(true);
+    expect(lista.children.length).toBe(1);
+    expect(lista.querySelector('.tarea-texto').textContent).toBe(textoFormateadoEsperado);
+  });
+
+  it('debe dejar la lista vacia si se limpian y todas estaban completadas', () => {
+    agregarTarea('Tarea 1', lista);
+    agregarTarea('Tarea 2', lista);
+
+    const items = lista.querySelectorAll('.tarea-item');
+    items.forEach(item => {
+      const checkbox = item.querySelector('.tarea-checkbox');
+      checkbox.checked = true;
+      alternarTarea(item, checkbox);
+    });
+
+    const eliminadas = limpiarCompletadas(lista);
+    
+    expect(eliminadas).toBe(2);
+    expect(lista.children.length).toBe(0);
+  });
 });
